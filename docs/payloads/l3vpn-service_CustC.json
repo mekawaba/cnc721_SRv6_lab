@@ -1,0 +1,178 @@
+{
+  "ietf-l3vpn-ntw:l3vpn-ntw": {
+    "vpn-services": {
+      "vpn-service": [
+        {
+          "vpn-id": "CustC",
+          "vpn-service-topology": "ietf-vpn-common:custom",
+          "vpn-instance-profiles": {
+            "vpn-instance-profile": [
+              {
+                "profile-id": "default",
+                "rd": "0:102:102",
+                "address-family": [
+                  {
+                    "address-family": "ietf-vpn-common:ipv4",
+                    "vpn-targets": {
+                      "vpn-target": [
+                        {
+                          "id": 0,
+                          "route-targets": [
+                            {
+                              "route-target": "0:102:102"
+                            }
+                          ],
+                          "route-target-type": "both"
+                        }
+                      ],
+                      "vpn-policies": {
+                        "export-policy": "POLICY2"
+                      }
+                    }
+                  }
+                ],
+                "cisco-l3vpn-ntw:srv6": {
+                  "address-family": [
+                    {
+                      "name": "ietf-vpn-common:ipv4",
+                      "locator-name": "MAIN"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "vpn-nodes": {
+            "vpn-node": [
+              {
+                "vpn-node-id": "PE1",
+                "active-vpn-instance-profiles": {
+                  "vpn-instance-profile": [
+                    {
+                      "profile-id": "default"
+                    }
+                  ]
+                },
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "FourHundredGigE0/0/0/2",
+                      "connection": {
+                        "encapsulation": {
+                          "type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 102
+                          }
+                        }
+                      },
+                      "ip-connection": {
+                        "ipv4": {
+                          "local-address": "172.16.1.1",
+                          "prefix-length": 24
+                        }
+                      },
+                      "routing-protocols": {
+                        "routing-protocol": [
+                          {
+                            "id": "0",
+                            "type": "ietf-vpn-common:direct-routing"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "vpn-node-id": "PE2",
+                "active-vpn-instance-profiles": {
+                  "vpn-instance-profile": [
+                    {
+                      "profile-id": "default"
+                    }
+                  ]
+                },
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "FourHundredGigE0/0/0/3",
+                      "connection": {
+                        "encapsulation": {
+                          "type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 102
+                          }
+                        }
+                      },
+                      "ip-connection": {
+                        "ipv4": {
+                          "local-address": "172.16.2.1",
+                          "prefix-length": 24
+                        }
+                      },
+                      "routing-protocols": {
+                        "routing-protocol": [
+                          {
+                            "id": "0",
+                            "type": "ietf-vpn-common:direct-routing"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "vpn-node-id": "PE3",
+                "active-vpn-instance-profiles": {
+                  "vpn-instance-profile": [
+                    {
+                      "profile-id": "default"
+                    }
+                  ]
+                },
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "FourHundredGigE0/0/0/3",
+                      "connection": {
+                        "encapsulation": {
+                          "type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 102
+                          }
+                        }
+                      },
+                      "ip-connection": {
+                        "ipv4": {
+                          "local-address": "172.16.3.1",
+                          "prefix-length": 24
+                        }
+                      },
+                      "routing-protocols": {
+                        "routing-protocol": [
+                          {
+                            "id": "0",
+                            "type": "ietf-vpn-common:direct-routing"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "cisco-l3vpn-ntw:service-assurance": {
+            "monitoring-state": "enable",
+            "profile-name": "Gold_L3VPN_ConfigProfile system",
+            "rule-name": "Rule-L3VPN-NM system"
+          }
+        }
+      ]
+    }
+  }
+}

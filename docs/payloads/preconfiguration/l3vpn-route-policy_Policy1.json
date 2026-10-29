@@ -1,0 +1,25 @@
+{
+  "cisco-l3vpn-routing-policy:l3vpn-routing-policy": {
+    "policy-definitions": {
+      "policy-definition": [
+        {
+          "name": "POLICY1",
+          "statements": {
+            "statement": [
+              {
+                "name": "statement1",
+                "actions": {
+                  "bgp-actions": {
+                    "set-ext-community": {
+                      "ext-community-set-ref": "COLOR_10"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

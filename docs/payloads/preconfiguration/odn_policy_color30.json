@@ -1,0 +1,44 @@
+{
+  "cisco-sr-te-cfp:sr-te": {
+    "cisco-sr-te-cfp-sr-odn:odn": {
+      "odn-template": [
+        {
+          "name": "ODN-EXCLUDE-RED",
+          "srv6": {
+            "locator": {
+              "locator-name": "MAIN",
+              "behavior": "ub6-insert-reduced",
+              "binding-sid-type": "srv6-dynamic"
+            }
+          },
+          "head-end": [
+            {
+              "name": "PE1"
+            },
+            {
+              "name": "PE2"
+            },
+            {
+              "name": "PE3"
+            }
+          ],
+          "color": 30,
+          "dynamic": {
+            "pce": {},
+            "metric-type": "igp",
+            "affinity": {
+              "rule": [
+                {
+                  "action": "exclude-any",
+                  "color": [
+                    "RED"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

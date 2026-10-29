@@ -1,0 +1,16 @@
+{
+  "cisco-l2vpn-routing-policy:l2vpn-routing-policy": {
+    "defined-sets": {
+      "tag-sets": {
+        "tag-set": [
+          {
+            "name": "COLOR_40",
+            "tag-value": [
+              40
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

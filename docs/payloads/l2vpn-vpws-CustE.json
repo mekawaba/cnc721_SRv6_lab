@@ -1,0 +1,86 @@
+{
+  "ietf-l2vpn-ntw:l2vpn-ntw": {
+    "vpn-services": {
+      "vpn-service": [
+        {
+          "vpn-id": "CustE_vpws",
+          "vpn-type": "ietf-vpn-common:vpws-evpn",
+          "vpn-nodes": {
+            "vpn-node": [
+              {
+                "vpn-node-id": "PE1",
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "FourHundredGigE0/0/0/2",
+                      "connection": {
+                        "encapsulation": {
+                          "encap-type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 300,
+                            "tag-operations": {
+                              "pop": "1",
+                              "cisco-l2vpn-ntw:mode": "symmetric"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "cisco-l2vpn-ntw:te-service-mapping": {
+                  "srv6": {
+                    "locator": "MAIN"
+                  }
+                }
+              },
+              {
+                "vpn-node-id": "PE3",
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "FourHundredGigE0/0/0/3",
+                      "connection": {
+                        "encapsulation": {
+                          "encap-type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 200,
+                            "tag-operations": {
+                              "pop": "1",
+                              "cisco-l2vpn-ntw:mode": "symmetric"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "cisco-l2vpn-ntw:te-service-mapping": {
+                  "srv6": {
+                    "locator": "MAIN"
+                  }
+                }
+              }
+            ]
+          },
+          "cisco-l2vpn-ntw:auto-evi-id": [
+            null
+          ],
+          "cisco-l2vpn-ntw:auto-evi-source": [
+            null
+          ],
+          "cisco-l2vpn-ntw:auto-evi-target": [
+            null
+          ],
+          "cisco-l2vpn-ntw:service-assurance": {
+            "monitoring-state": "enable",
+            "profile-name": "Gold_L2VPN_ConfigProfile system",
+            "rule-name": "Rule-L2VPN-NM system"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "cisco-l3vpn-routing-policy:l3vpn-routing-policy": {
+    "defined-sets": {
+      "tag-sets": {
+        "tag-set": [
+          {
+            "name": "COLOR_10",
+            "tag-value": [
+              10
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

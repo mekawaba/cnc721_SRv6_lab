@@ -1,0 +1,25 @@
+{
+  "cisco-l2vpn-routing-policy:l2vpn-routing-policy": {
+    "policy-definitions": {
+      "policy-definition": [
+        {
+          "name": "POLICY4",
+          "statements": {
+            "statement": [
+              {
+                "name": "statement1",
+                "actions": {
+                  "bgp-actions": {
+                    "set-ext-community": {
+                      "ext-community-set-ref": "COLOR_40"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

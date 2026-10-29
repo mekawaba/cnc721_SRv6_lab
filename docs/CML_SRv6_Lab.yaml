@@ -1,0 +1,3020 @@
+annotations:
+  - border_color: '#FFFBFB'
+    border_radius: 0
+    border_style: ''
+    color: '#34F3F35C'
+    rotation: 0
+    thickness: 1
+    type: rectangle
+    x1: -640.0
+    y1: -240.0
+    x2: 440.0
+    y2: 360.0
+    z_index: 0
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#808080FF'
+    rotation: 0
+    text_bold: true
+    text_content: SRv6/ISISv6
+    text_font: monospace
+    text_italic: false
+    text_size: 15
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -400.0
+    y1: -80.0
+    z_index: 1
+  - border_color: '#8080808F'
+    border_style: ''
+    color: '#FFFFFFFF'
+    rotation: 0
+    thickness: 1
+    type: ellipse
+    x1: -20.0
+    y1: -80.0
+    x2: 20.0
+    y2: 80.0
+    z_index: 2
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#808080FF'
+    rotation: 0
+    text_bold: false
+    text_content: 'TE: 100'
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -640.0
+    y1: 40.0
+    z_index: 3
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#808080FF'
+    rotation: 0
+    text_bold: false
+    text_content: 'TE: 100'
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -400.0
+    y1: 80.0
+    z_index: 3
+smart_annotations: []
+nodes:
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:46:14.878 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 25.4.2
+          !! Last configuration change at Thu Oct 29 06:46:12 2026 by cisco
+          !
+          hostname PE1
+          logging trap informational
+          logging events level informational
+          logging console disable
+          logging monitor debugging
+          logging 192.168.4.62 vrf default severity info port 30514
+          logging events link-status software-interfaces
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$InVpN0QMRaKb7N0.$k/wXWK5YWu2nP7tkQn4eHxatfVsfLPejx6qkDic/xkKa9PIinGcAI2z5Z0LnK9RfPT/BErC46ig8at4h//yqF1
+          !
+          grpc
+           port 57500
+           no-tls
+           max-streams 128
+           address-family ipv4
+           max-request-total 256
+           max-request-per-user 32
+          !
+          vrf CustA
+           address-family ipv4 unicast
+            import route-target
+             100:100
+            !
+            export route-policy POLICY1
+            export route-target
+             100:100
+            !
+           !
+          !
+          vrf CustB
+           address-family ipv4 unicast
+            import route-target
+             101:101
+            !
+            export route-policy POLICY1
+            export route-target
+             101:101
+            !
+           !
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          snmp-server interface subset 1 regular-expression Four*
+           notification linkupdown
+          !
+          snmp-server vrf default
+           host 192.168.4.62 traps cisco udp-port 31062
+          !
+          snmp-server community cisco
+          snmp-server traps snmp linkup
+          snmp-server traps snmp linkdown
+          netconf-yang agent
+           ssh
+          !
+          interface Loopback0
+           ipv4 address 1.1.1.1 255.255.255.255
+           ipv6 address fcbb:bb00:1::1/128
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           ipv4 address 192.168.4.71 255.255.255.0
+          !
+          interface FourHundredGigE0/0/0/0
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/1
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/2
+           description T-SDN Interface
+          !
+          interface FourHundredGigE0/0/0/2.100
+           description T-SDN Interface
+           vrf CustA
+           ipv4 address 192.168.1.1 255.255.255.0
+           encapsulation dot1q 100
+          !
+          interface FourHundredGigE0/0/0/2.101
+           description T-SDN Interface
+           vrf CustB
+           ipv4 address 10.10.1.1 255.255.255.0
+           encapsulation dot1q 101
+          !
+          interface FourHundredGigE0/0/0/2.200 l2transport
+           description T-SDN Interface
+           encapsulation dot1q 200
+           rewrite ingress tag pop 1 symmetric
+          !
+          interface FourHundredGigE0/0/0/2.500 l2transport
+           description T-SDN Interface
+           encapsulation dot1q 500
+           rewrite ingress tag pop 1 symmetric
+          !
+          interface FourHundredGigE0/0/0/3
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/4
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/5
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/6
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/7
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/8
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/9
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/10
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/11
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/12
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/13
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/14
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/15
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/16
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/17
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/18
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/19
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/20
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/21
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/22
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/23
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/24
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/25
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/26
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/27
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/28
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/29
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/30
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/31
+           shutdown
+          !
+          extcommunity-set opaque COLOR_10
+            10
+          end-set
+          !
+          extcommunity-set opaque COLOR_30
+            30
+          end-set
+          !
+          route-policy POLICY1
+            set extcommunity color COLOR_10
+          end-policy
+          !
+          route-policy POLICY3
+            set extcommunity color COLOR_30
+          end-policy
+          !
+          router isis core
+           is-type level-2-only
+           net 49.0001.0000.0000.0001.00
+           distribute link-state
+           address-family ipv4 unicast
+            router-id 1.1.1.1
+           !
+           address-family ipv6 unicast
+            metric-style wide
+            router-id Loopback0
+            segment-routing srv6
+             locator MAIN
+             !
+             locator ALGO128
+             !
+            !
+           !
+           flex-algo 128
+            advertise-definition
+           !
+           interface Loopback0
+            passive
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/0
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/1
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+          !
+          router bgp 65000
+           bgp router-id 1.1.1.1
+           address-family vpnv4 unicast
+           !
+           address-family l2vpn evpn
+           !
+           address-family link-state link-state
+           !
+           neighbor-group PCE
+            remote-as 65000
+            update-source Loopback0
+            address-family link-state link-state
+            !
+           !
+           neighbor-group PEs
+            remote-as 65000
+            update-source Loopback0
+            address-family vpnv4 unicast
+            !
+            address-family l2vpn evpn
+             route-policy POLICY3 out
+            !
+           !
+           neighbor fcbb:bb00:2::1
+            use neighbor-group PEs
+           !
+           neighbor fcbb:bb00:3::1
+            use neighbor-group PEs
+           !
+           neighbor fcbb:bb00:6::1
+            use neighbor-group PCE
+           !
+           vrf CustA
+            rd 100:100
+            address-family ipv4 unicast
+             segment-routing srv6
+              locator MAIN
+              alloc mode per-vrf
+             !
+             redistribute connected
+            !
+           !
+           vrf CustB
+            rd 101:101
+            address-family ipv4 unicast
+             segment-routing srv6
+              locator MAIN
+              alloc mode per-vrf
+             !
+             redistribute connected
+            !
+           !
+          !
+          evpn
+           evi 103 segment-routing srv6
+            bgp
+            !
+            advertise-mac
+            !
+            locator MAIN
+            !
+           !
+           segment-routing srv6
+            locator MAIN
+            !
+           !
+          !
+          l2vpn
+           xconnect group CustD_vpws
+            p2p CustD_vpws
+             interface FourHundredGigE0/0/0/2.200
+             neighbor evpn evi 101 service 100 segment-routing srv6
+              locator MAIN
+             !
+            !
+           !
+           bridge group BRIDGE
+            bridge-domain BRIDGE_evi_103
+             interface FourHundredGigE0/0/0/2.500
+             !
+             evi 103 segment-routing srv6
+             !
+            !
+           !
+          !
+          segment-routing
+           traffic-eng
+            interface FourHundredGigE0/0/0/0
+            !
+            interface FourHundredGigE0/0/0/1
+             metric 100
+            !
+            srv6
+             locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+            !
+            on-demand color 30
+             srv6
+              locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+             !
+             dynamic
+              pcep
+              !
+              metric
+               type igp
+              !
+              affinity
+               exclude-any
+                name RED
+               !
+              !
+             !
+            !
+            on-demand color 40
+             srv6
+              locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+             !
+             dynamic
+              pcep
+              !
+              metric
+               type te
+              !
+             !
+            !
+            policy srte_c_10_ep_fcbb:bb00:2::1
+             srv6
+              locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+             !
+             color 10 end-point ipv6 fcbb:bb00:2::1
+             candidate-paths
+              preference 100
+               dynamic
+                pcep
+                !
+                metric
+                 type igp
+                !
+               !
+               constraints
+                affinity
+                 exclude-any
+                  name RED
+                 !
+                !
+               !
+              !
+             !
+            !
+            affinity-map
+             name RED bit-position 3
+            !
+            pcc
+             source-address ipv6 fcbb:bb00:1::1
+             pce address ipv6 fcbb:bb00:6::1
+              precedence 10
+             !
+             report-all
+            !
+           !
+           srv6
+            encapsulation
+             source-address fcbb:bb00:1::1
+            !
+            locators
+             locator MAIN
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb00:1::/48
+             !
+             locator ALGO128
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb01:1::/48
+              algorithm 128
+             !
+            !
+           !
+          !
+          xml agent tty
+          !
+          netconf agent tty
+          !
+          ssh server logging
+          ssh server rate-limit 600
+          ssh server session-limit 100
+          ssh server vrf default
+          ssh server netconf vrf default
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n0
+    image_definition: null
+    label: PE1
+    node_definition: 8711-32fh-m
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -640
+    y: -80
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: FourHundredGigE0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: FourHundredGigE0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: FourHundredGigE0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:46:23.430 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 25.4.2
+          !! Last configuration change at Thu Oct 29 06:46:21 2026 by cisco
+          !
+          hostname PE2
+          logging trap informational
+          logging events level informational
+          logging console disable
+          logging monitor debugging
+          logging 192.168.4.62 vrf default severity info port 30514
+          logging events link-status software-interfaces
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$OjZWpPdMB8K1p...$hPKvf/nZ.4mqzX/LW092yeO2BLjIjsliu8fU/WqI6tpiXkT9lwNe1cg792zcYIDFVWWWWsP.67j1MwfXDqTJO0
+          !
+          grpc
+           port 57500
+           no-tls
+           max-streams 128
+           address-family ipv4
+           max-request-total 256
+           max-request-per-user 32
+          !
+          vrf CustA
+           address-family ipv4 unicast
+            import route-target
+             100:100
+            !
+            export route-policy POLICY1
+            export route-target
+             100:100
+            !
+           !
+          !
+          vrf CustB
+           address-family ipv4 unicast
+            import route-target
+             101:101
+            !
+            export route-policy POLICY1
+            export route-target
+             101:101
+            !
+           !
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          snmp-server interface subset 1 regular-expression Four*
+           notification linkupdown
+          !
+          snmp-server vrf default
+           host 192.168.4.62 traps cisco udp-port 31062
+          !
+          snmp-server community cisco
+          snmp-server traps snmp linkup
+          snmp-server traps snmp linkdown
+          netconf-yang agent
+           ssh
+          !
+          interface Bundle-Ether1
+           description T-SDN Interface
+           lacp system mac 1212.1212.1212
+          !
+          interface Bundle-Ether1.500 l2transport
+           description T-SDN Interface
+           encapsulation dot1q 500
+           rewrite ingress tag pop 1 symmetric
+          !
+          interface Loopback0
+           ipv4 address 2.2.2.2 255.255.255.255
+           ipv6 address fcbb:bb00:2::1/128
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           ipv4 address 192.168.4.72 255.255.255.0
+          !
+          interface FourHundredGigE0/0/0/0
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/1
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/2
+           bundle id 1 mode active
+          !
+          interface FourHundredGigE0/0/0/3
+           description T-SDN Interface
+          !
+          interface FourHundredGigE0/0/0/3.100
+           description T-SDN Interface
+           vrf CustA
+           ipv4 address 192.168.2.1 255.255.255.0
+           encapsulation dot1q 100
+          !
+          interface FourHundredGigE0/0/0/3.101
+           description T-SDN Interface
+           vrf CustB
+           ipv4 address 10.10.2.1 255.255.255.0
+           encapsulation dot1q 101
+          !
+          interface FourHundredGigE0/0/0/3.200 l2transport
+           description T-SDN Interface
+           encapsulation dot1q 200
+           rewrite ingress tag pop 1 symmetric
+          !
+          interface FourHundredGigE0/0/0/4
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/5
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/6
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/7
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/8
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/9
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/10
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/11
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/12
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/13
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/14
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/15
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/16
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/17
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/18
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/19
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/20
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/21
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/22
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/23
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/24
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/25
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/26
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/27
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/28
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/29
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/30
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/31
+           shutdown
+          !
+          extcommunity-set opaque COLOR_10
+            10
+          end-set
+          !
+          extcommunity-set opaque COLOR_30
+            30
+          end-set
+          !
+          route-policy POLICY1
+            set extcommunity color COLOR_10
+          end-policy
+          !
+          route-policy POLICY3
+            set extcommunity color COLOR_30
+          end-policy
+          !
+          router isis core
+           is-type level-2-only
+           net 49.0001.0000.0000.0002.00
+           address-family ipv4 unicast
+            router-id 2.2.2.2
+           !
+           address-family ipv6 unicast
+            metric-style wide
+            router-id Loopback0
+            segment-routing srv6
+             locator MAIN
+             !
+             locator ALGO128
+             !
+            !
+           !
+           flex-algo 128
+            advertise-definition
+           !
+           interface Loopback0
+            passive
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/0
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/1
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+          !
+          router bgp 65000
+           bgp router-id 2.2.2.2
+           address-family vpnv4 unicast
+           !
+           address-family l2vpn evpn
+           !
+           address-family link-state link-state
+           !
+           neighbor-group PCE
+            remote-as 65000
+            update-source Loopback0
+            address-family link-state link-state
+            !
+           !
+           neighbor-group PEs
+            remote-as 65000
+            update-source Loopback0
+            address-family vpnv4 unicast
+            !
+            address-family l2vpn evpn
+             route-policy POLICY3 out
+            !
+           !
+           neighbor fcbb:bb00:1::1
+            use neighbor-group PEs
+           !
+           neighbor fcbb:bb00:3::1
+            use neighbor-group PEs
+           !
+           neighbor fcbb:bb00:6::1
+            use neighbor-group PCE
+           !
+           vrf CustA
+            rd 100:100
+            address-family ipv4 unicast
+             segment-routing srv6
+              locator MAIN
+              alloc mode per-vrf
+             !
+             redistribute connected
+            !
+           !
+           vrf CustB
+            rd 101:101
+            address-family ipv4 unicast
+             segment-routing srv6
+              locator MAIN
+              alloc mode per-vrf
+             !
+             redistribute connected
+            !
+           !
+          !
+          evpn
+           evi 103 segment-routing srv6
+            bgp
+            !
+            advertise-mac
+            !
+            locator MAIN
+            !
+           !
+           interface Bundle-Ether1
+            ethernet-segment
+             identifier type 0 23.23.00.00.00.00.00.00.00
+            !
+           !
+           segment-routing srv6
+            locator MAIN
+            !
+           !
+          !
+          l2vpn
+           xconnect group CustD_vpws
+            p2p CustD_vpws
+             interface FourHundredGigE0/0/0/3.200
+             neighbor evpn evi 101 service 100 segment-routing srv6
+              locator MAIN
+             !
+            !
+           !
+           bridge group BRIDGE
+            bridge-domain BRIDGE_evi_103
+             interface Bundle-Ether1.500
+             !
+             evi 103 segment-routing srv6
+             !
+            !
+           !
+          !
+          segment-routing
+           traffic-eng
+            interface FourHundredGigE0/0/0/0
+             affinity
+              name RED
+             !
+            !
+            srv6
+             locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+            !
+            on-demand color 30
+             srv6
+              locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+             !
+             dynamic
+              pcep
+              !
+              metric
+               type igp
+              !
+              affinity
+               exclude-any
+                name RED
+               !
+              !
+             !
+            !
+            on-demand color 40
+             srv6
+              locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+             !
+             dynamic
+              pcep
+              !
+              metric
+               type te
+              !
+             !
+            !
+            affinity-map
+             name RED bit-position 3
+            !
+            pcc
+             source-address ipv6 fcbb:bb00:2::1
+             pce address ipv6 fcbb:bb00:6::1
+              precedence 10
+             !
+             report-all
+            !
+           !
+           srv6
+            encapsulation
+             source-address fcbb:bb00:2::1
+            !
+            locators
+             locator MAIN
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb00:2::/48
+             !
+             locator ALGO128
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb01:2::/48
+              algorithm 128
+             !
+            !
+           !
+          !
+          xml agent tty
+          !
+          netconf agent tty
+          !
+          ssh server logging
+          ssh server rate-limit 600
+          ssh server session-limit 100
+          ssh server vrf default
+          ssh server netconf vrf default
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n1
+    image_definition: null
+    label: PE2
+    node_definition: 8711-32fh-m
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -200
+    y: -200
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: FourHundredGigE0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: FourHundredGigE0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: FourHundredGigE0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i5
+        label: FourHundredGigE0/0/0/3
+        mac_address: null
+        type: physical
+        slot: 4
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:44:14.684 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 26.1.1
+          !! Last configuration change at Thu Oct 29 06:44:13 2026 by cisco
+          !
+          hostname CE1
+          logging console disable
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$CpW5o/hs/RSE5o/.$qsDNJEmayfqlsnLYAglno5gAF7jpCTEmKbMMPbKog/UibTzsi20ZzJ9OucJwjeKpSsE7u5ug27/VkxZLSBaOi0
+          !
+          username admin
+           group root-lr
+           group cisco-support
+           secret 10 $6$DZnPB0twKXjp6B0.$Uu3s.Q0QGSRfudHr1UTzr8jbV1CyhnRJ8E44vUXZyw5Yfr/DjWdNfNSOiJcvv4irSdwugcnYB2b8fxtvZwFAx0
+          !
+          username lab
+           group root-lr
+           group cisco-support
+           secret 10 $6$ime4Xgel6OA0X...$TeGFoovVDB2GWWRkB7.0iqNYhrWG0LsyAEVNgGjVG1GqEj/FxOHkdaauBGN3KNm7dFntvPIdOJBU0nJJl06UJ1
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           shutdown
+          !
+          interface GigabitEthernet0/0/0/0.100
+           description l3vpn_CustA
+           ipv4 address 192.168.1.2 255.255.255.0
+           encapsulation dot1q 100
+          !
+          interface GigabitEthernet0/0/0/0.101
+           description l3vpn_CustB
+           ipv4 address 10.10.1.2 255.255.255.0
+           encapsulation dot1q 101
+          !
+          interface GigabitEthernet0/0/0/0.102
+           description l3vpn_CustC
+           ipv4 address 172.16.1.2 255.255.255.0
+           encapsulation dot1q 102
+          !
+          interface GigabitEthernet0/0/0/0.200
+           description vpws_to_CE3
+           ipv4 address 10.1.1.1 255.255.255.0
+           encapsulation dot1q 200
+          !
+          interface GigabitEthernet0/0/0/0.300
+           description vpws_to_CE4
+           ipv4 address 10.1.2.1 255.255.255.0
+           encapsulation dot1q 300
+          !
+          interface GigabitEthernet0/0/0/0.500
+           description vpls_CustD
+           ipv4 address 198.18.10.100 255.255.255.0
+           encapsulation dot1q 500
+          !
+          interface GigabitEthernet0/0/0/0.501
+           description vpls_CustE
+           ipv4 address 198.18.20.100 255.255.255.0
+           encapsulation dot1q 501
+          !
+          interface GigabitEthernet0/0/0/1
+           shutdown
+          !
+          interface GigabitEthernet0/0/0/2
+           shutdown
+          !
+          router static
+           address-family ipv4 unicast
+            10.10.2.0/24 GigabitEthernet0/0/0/0.101 10.10.1.1
+            10.10.3.0/24 GigabitEthernet0/0/0/0.101 10.10.1.1
+            172.16.2.0/24 GigabitEthernet0/0/0/0.102 172.16.1.1
+            172.16.3.0/24 GigabitEthernet0/0/0/0.102 172.16.1.1
+            192.168.2.0/24 GigabitEthernet0/0/0/0.100 192.168.1.1
+            192.168.3.0/24 GigabitEthernet0/0/0/0.100 192.168.1.1
+           !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n2
+    image_definition: null
+    label: CE1
+    node_definition: xrd
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -920
+    y: -80
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:46:25.007 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 25.4.2
+          !! Last configuration change at Thu Oct 29 06:46:21 2026 by cisco
+          !
+          hostname PE3
+          logging trap informational
+          logging events level informational
+          logging console disable
+          logging monitor debugging
+          logging 192.168.4.62 vrf default severity info port 30514
+          logging events link-status software-interfaces
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$lho0J09hEZ9I7J0.$2g.z0Pci6OH9u8wS8PrOmC7XuBVrZmUkLDa6R8/qGWgUP3iv9GAuMga96k5EXYFyRssHoZ8eAhj5eLmV9s/xz/
+          !
+          grpc
+           port 57500
+           no-tls
+           max-streams 128
+           address-family ipv4
+           max-request-total 256
+           max-request-per-user 32
+          !
+          vrf CustA
+           address-family ipv4 unicast
+            import route-target
+             100:100
+            !
+            export route-policy POLICY1
+            export route-target
+             100:100
+            !
+           !
+          !
+          vrf CustB
+           address-family ipv4 unicast
+            import route-target
+             101:101
+            !
+            export route-policy POLICY1
+            export route-target
+             101:101
+            !
+           !
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          snmp-server interface subset 1 regular-expression Four*
+           notification linkupdown
+          !
+          snmp-server vrf default
+           host 192.168.4.62 traps cisco udp-port 31062
+          !
+          snmp-server community cisco
+          snmp-server traps snmp linkup
+          snmp-server traps snmp linkdown
+          netconf-yang agent
+           ssh
+          !
+          interface Bundle-Ether1
+           description T-SDN Interface
+           lacp system mac 1212.1212.1212
+          !
+          interface Bundle-Ether1.500 l2transport
+           description T-SDN Interface
+           encapsulation dot1q 500
+           rewrite ingress tag pop 1 symmetric
+          !
+          interface Loopback0
+           ipv4 address 3.3.3.3 255.255.255.255
+           ipv6 address fcbb:bb00:3::1/128
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           ipv4 address 192.168.4.73 255.255.255.0
+          !
+          interface FourHundredGigE0/0/0/0
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/1
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/2
+           bundle id 1 mode active
+          !
+          interface FourHundredGigE0/0/0/3
+           description T-SDN Interface
+          !
+          interface FourHundredGigE0/0/0/3.100
+           description T-SDN Interface
+           vrf CustA
+           ipv4 address 192.168.3.1 255.255.255.0
+           encapsulation dot1q 100
+          !
+          interface FourHundredGigE0/0/0/3.101
+           description T-SDN Interface
+           vrf CustB
+           ipv4 address 10.10.3.1 255.255.255.0
+           encapsulation dot1q 101
+          !
+          interface FourHundredGigE0/0/0/4
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/5
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/6
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/7
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/8
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/9
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/10
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/11
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/12
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/13
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/14
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/15
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/16
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/17
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/18
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/19
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/20
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/21
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/22
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/23
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/24
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/25
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/26
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/27
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/28
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/29
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/30
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/31
+           shutdown
+          !
+          extcommunity-set opaque COLOR_10
+            10
+          end-set
+          !
+          extcommunity-set opaque COLOR_30
+            30
+          end-set
+          !
+          route-policy POLICY1
+            set extcommunity color COLOR_10
+          end-policy
+          !
+          route-policy POLICY3
+            set extcommunity color COLOR_30
+          end-policy
+          !
+          router isis core
+           is-type level-2-only
+           net 49.0001.0000.0000.0003.00
+           address-family ipv4 unicast
+            router-id 3.3.3.3
+           !
+           address-family ipv6 unicast
+            metric-style wide
+            router-id Loopback0
+            segment-routing srv6
+             locator MAIN
+             !
+             locator ALGO128
+             !
+            !
+           !
+           flex-algo 128
+            advertise-definition
+           !
+           interface Loopback0
+            passive
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/0
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/1
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+          !
+          router bgp 65000
+           bgp router-id 3.3.3.3
+           address-family vpnv4 unicast
+           !
+           address-family l2vpn evpn
+           !
+           address-family link-state link-state
+           !
+           neighbor-group PCE
+            remote-as 65000
+            update-source Loopback0
+            address-family link-state link-state
+            !
+           !
+           neighbor-group PEs
+            remote-as 65000
+            update-source Loopback0
+            address-family vpnv4 unicast
+            !
+            address-family l2vpn evpn
+             route-policy POLICY3 out
+            !
+           !
+           neighbor fcbb:bb00:1::1
+            use neighbor-group PEs
+           !
+           neighbor fcbb:bb00:2::1
+            use neighbor-group PEs
+           !
+           neighbor fcbb:bb00:6::1
+            use neighbor-group PCE
+           !
+           vrf CustA
+            rd 100:100
+            address-family ipv4 unicast
+             segment-routing srv6
+              locator MAIN
+              alloc mode per-vrf
+             !
+             redistribute connected
+            !
+           !
+           vrf CustB
+            rd 101:101
+            address-family ipv4 unicast
+             segment-routing srv6
+              locator MAIN
+              alloc mode per-vrf
+             !
+             redistribute connected
+            !
+           !
+          !
+          evpn
+           evi 103 segment-routing srv6
+            bgp
+            !
+            advertise-mac
+            !
+            locator MAIN
+            !
+           !
+           interface Bundle-Ether1
+            ethernet-segment
+             identifier type 0 23.23.00.00.00.00.00.00.00
+            !
+           !
+           segment-routing srv6
+            locator MAIN
+            !
+           !
+          !
+          l2vpn
+           bridge group BRIDGE
+            bridge-domain BRIDGE_evi_103
+             interface Bundle-Ether1.500
+             !
+             evi 103 segment-routing srv6
+             !
+            !
+           !
+          !
+          segment-routing
+           traffic-eng
+            interface FourHundredGigE0/0/0/0
+             metric 100
+            !
+            srv6
+             locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+            !
+            on-demand color 30
+             srv6
+              locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+             !
+             dynamic
+              pcep
+              !
+              metric
+               type igp
+              !
+              affinity
+               exclude-any
+                name RED
+               !
+              !
+             !
+            !
+            on-demand color 40
+             srv6
+              locator MAIN binding-sid dynamic behavior ub6-insert-reduced
+             !
+             dynamic
+              pcep
+              !
+              metric
+               type te
+              !
+             !
+            !
+            pcc
+             source-address ipv6 fcbb:bb00:3::1
+             pce address ipv6 fcbb:bb00:6::1
+              precedence 10
+             !
+             report-all
+            !
+           !
+           srv6
+            encapsulation
+             source-address fcbb:bb00:3::1
+            !
+            locators
+             locator MAIN
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb00:3::/48
+             !
+             locator ALGO128
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb01:3::/48
+              algorithm 128
+             !
+            !
+           !
+          !
+          xml agent tty
+          !
+          netconf agent tty
+          !
+          ssh server logging
+          ssh server rate-limit 600
+          ssh server session-limit 100
+          ssh server vrf default
+          ssh server netconf vrf default
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n3
+    image_definition: null
+    label: PE3
+    node_definition: 8711-32fh-m
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -200
+    y: 40
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: FourHundredGigE0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: FourHundredGigE0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: FourHundredGigE0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i5
+        label: FourHundredGigE0/0/0/3
+        mac_address: null
+        type: physical
+        slot: 4
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:45:45.232 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 26.1.1
+          !! Last configuration change at Thu Oct 29 06:45:44 2026 by cisco
+          !
+          hostname CE2
+          logging console disable
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$AcAtN8HS4Yb/N...$rFiujn9SR8mMGxUuGSYlq1zdXApR28r27hSK0LqCZta0Ld1L4kaooXIwVx/fr3swhu2TcO/pcPs74PaonWeVs.
+          !
+          username admin
+           group root-lr
+           group cisco-support
+           secret 10 $6$Ps5lu1yFgy2fDu1.$KvWdC7snRMsJu2oNcO2Fo/GpUVZe0qCdGd4H5gt.Yim7.EDgaiUSi68.ThVgryYnNEtwM0Zhe.LVCR8CDAGsK/
+          !
+          username lab
+           group root-lr
+           group cisco-support
+           secret 10 $6$IFGe60YY8WdW660.$YdHMor7vVDDykMGyGNWQFspA2XouChJt12.D/d7vm2AqT/yACgyClA0I7//qWMn4mgoULJv/xcwJl1mr1kl1E/
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          interface Bundle-Ether1
+          !
+          interface Bundle-Ether1.500
+           description vpls_CustD
+           ipv4 address 198.18.10.200 255.255.255.0
+           encapsulation dot1q 500
+          !
+          interface Bundle-Ether1.501
+           description vpls_CustE
+           ipv4 address 198.18.20.200 255.255.255.0
+           encapsulation dot1q 501
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           shutdown
+          !
+          interface GigabitEthernet0/0/0/0
+           bundle id 1 mode active
+          !
+          interface GigabitEthernet0/0/0/1
+           bundle id 1 mode active
+          !
+          interface GigabitEthernet0/0/0/2
+           shutdown
+          !
+          router static
+           address-family ipv4 unicast
+            0.0.0.0/0 GigabitEthernet0/0/0/0 192.168.2.1
+            0.0.0.0/0 GigabitEthernet0/0/0/1 192.168.3.1
+           !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n4
+    image_definition: null
+    label: CE2
+    node_definition: xrd
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: 80
+    y: -80
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:46:19.747 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 25.4.2
+          !! Last configuration change at Thu Oct 29 06:46:17 2026 by cisco
+          !
+          hostname P4
+          logging trap informational
+          logging events level informational
+          logging console disable
+          logging monitor debugging
+          logging 192.168.4.62 vrf default severity info port 30514
+          logging events link-status software-interfaces
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$DLf4S1peVrOsBS1.$D1V/zMZXQ4ki22k8u.MBtcVn3zZCXudxClRC3GAnjzAzXx/KFLN4dfj0UfkT9o7TXbfhz2FlXwzwditGWkVNY.
+          !
+          grpc
+           port 57500
+           no-tls
+           max-streams 128
+           address-family ipv4
+           max-request-total 256
+           max-request-per-user 32
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          snmp-server interface subset 1 regular-expression Four*
+           notification linkupdown
+          !
+          snmp-server vrf default
+           host 192.168.4.62 traps cisco udp-port 31062
+          !
+          snmp-server community cisco
+          snmp-server traps snmp linkup
+          snmp-server traps snmp linkdown
+          netconf-yang agent
+           ssh
+          !
+          interface Loopback0
+           ipv4 address 4.4.4.4 255.255.255.255
+           ipv6 address fcbb:bb00:4::1/128
+          !
+          interface Loopback100
+           description from Config Template
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           ipv4 address 192.168.4.74 255.255.255.0
+          !
+          interface FourHundredGigE0/0/0/0
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/1
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/2
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/3
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/4
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/5
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/6
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/7
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/8
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/9
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/10
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/11
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/12
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/13
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/14
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/15
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/16
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/17
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/18
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/19
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/20
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/21
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/22
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/23
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/24
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/25
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/26
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/27
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/28
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/29
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/30
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/31
+           shutdown
+          !
+          router isis core
+           is-type level-2-only
+           net 49.0001.0000.0000.0004.00
+           address-family ipv4 unicast
+            router-id 4.4.4.4
+           !
+           address-family ipv6 unicast
+            metric-style wide
+            router-id Loopback0
+            segment-routing srv6
+             locator MAIN
+             !
+            !
+           !
+           interface Loopback0
+            passive
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/0
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/1
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/2
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/3
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+          !
+          router bgp 65000
+           address-family link-state link-state
+           !
+           neighbor-group PCE
+            remote-as 65000
+            update-source Loopback0
+            address-family link-state link-state
+            !
+           !
+           neighbor fcbb:bb00:6::1
+            use neighbor-group PCE
+           !
+          !
+          segment-routing
+           traffic-eng
+            interface FourHundredGigE0/0/0/0
+            !
+            interface FourHundredGigE0/0/0/1
+             affinity
+              name RED
+             !
+            !
+            affinity-map
+             name RED bit-position 3
+            !
+           !
+           srv6
+            encapsulation
+             source-address fcbb:bb00:4::1
+            !
+            locators
+             locator MAIN
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb00:4::/48
+             !
+            !
+           !
+          !
+          xml agent tty
+          !
+          netconf agent tty
+          !
+          ssh server logging
+          ssh server rate-limit 600
+          ssh server session-limit 100
+          ssh server vrf default
+          ssh server netconf vrf default
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n5
+    image_definition: null
+    label: P4
+    node_definition: 8711-32fh-m
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -480
+    y: -200
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: FourHundredGigE0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: FourHundredGigE0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: FourHundredGigE0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i5
+        label: FourHundredGigE0/0/0/3
+        mac_address: null
+        type: physical
+        slot: 4
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:46:19.214 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 25.4.2
+          !! Last configuration change at Thu Oct 29 06:46:16 2026 by cisco
+          !
+          hostname P5
+          logging trap informational
+          logging events level informational
+          logging console disable
+          logging monitor debugging
+          logging 192.168.4.62 vrf default severity info port 30514
+          logging events link-status software-interfaces
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$kxhkGT9g209/G...$GXw4k1hQ5JYQq1ic3.q0vMtLH2v4T3zulV7fs4bhF53xv1rBomirK8eF.N55D5Qfj0wWgSnV.YNyDai1jvkxp1
+          !
+          grpc
+           port 57500
+           no-tls
+           max-streams 128
+           address-family ipv4
+           max-request-total 256
+           max-request-per-user 32
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          snmp-server interface subset 1 regular-expression Four*
+           notification linkupdown
+          !
+          snmp-server vrf default
+           host 192.168.4.62 traps cisco udp-port 31062
+          !
+          snmp-server community cisco
+          snmp-server traps snmp linkup
+          snmp-server traps snmp linkdown
+          netconf-yang agent
+           ssh
+          !
+          interface Loopback0
+           ipv4 address 5.5.5.5 255.255.255.255
+           ipv6 address fcbb:bb00:5::1/128
+          !
+          interface Loopback100
+           description test
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           ipv4 address 192.168.4.75 255.255.255.0
+          !
+          interface FourHundredGigE0/0/0/0
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/1
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/2
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/3
+           ipv6 enable
+          !
+          interface FourHundredGigE0/0/0/4
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/5
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/6
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/7
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/8
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/9
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/10
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/11
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/12
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/13
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/14
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/15
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/16
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/17
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/18
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/19
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/20
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/21
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/22
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/23
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/24
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/25
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/26
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/27
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/28
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/29
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/30
+           shutdown
+          !
+          interface FourHundredGigE0/0/0/31
+           shutdown
+          !
+          router isis core
+           is-type level-2-only
+           net 49.0001.0000.0000.0005.00
+           address-family ipv4 unicast
+            router-id 5.5.5.5
+           !
+           address-family ipv6 unicast
+            metric-style wide
+            router-id Loopback0
+            segment-routing srv6
+             locator MAIN
+             !
+             locator ALGO128
+             !
+            !
+           !
+           flex-algo 128
+            advertise-definition
+           !
+           interface Loopback0
+            passive
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/0
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/1
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/2
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface FourHundredGigE0/0/0/3
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+          !
+          router bgp 65000
+           address-family link-state link-state
+           !
+           neighbor-group PCE
+            remote-as 65000
+            update-source Loopback0
+            address-family link-state link-state
+            !
+           !
+           neighbor fcbb:bb00:6::1
+            use neighbor-group PCE
+           !
+          !
+          segment-routing
+           traffic-eng
+            interface FourHundredGigE0/0/0/0
+             metric 100
+            !
+            interface FourHundredGigE0/0/0/1
+             metric 100
+            !
+           !
+           srv6
+            encapsulation
+             source-address fcbb:bb00:5::1
+            !
+            locators
+             locator MAIN
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb00:5::/48
+             !
+             locator ALGO128
+              micro-segment behavior unode psp-usd
+              prefix fcbb:bb01:5::/48
+              algorithm 128
+             !
+            !
+           !
+          !
+          xml agent tty
+          !
+          netconf agent tty
+          !
+          ssh server logging
+          ssh server rate-limit 600
+          ssh server session-limit 100
+          ssh server vrf default
+          ssh server netconf vrf default
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n6
+    image_definition: null
+    label: P5
+    node_definition: 8711-32fh-m
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -480
+    y: 40
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: FourHundredGigE0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: FourHundredGigE0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: FourHundredGigE0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i5
+        label: FourHundredGigE0/0/0/3
+        mac_address: null
+        type: physical
+        slot: 4
+  - boot_disk_size: null
+    configuration:
+      - name: iosxr_config.txt
+        content: |2-
+
+          Thu Oct 29 06:46:07.287 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 26.1.1
+          !! Last configuration change at Thu Oct 29 06:46:04 2026 by cisco
+          !
+          hostname SR-PCE
+          logging trap informational
+          logging events link-status software-interfaces
+          logging events level informational
+          logging console disable
+          logging monitor debugging
+          logging 192.168.4.62 vrf default severity info port 30514
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$GT4dH/bFuIYC3H/.$/a1xWpyWQYvDRu3JY1S7E0tjBBy3MhcVj3mFJQvXGBk1CRguJbeNzF4J1M/DF1oOVOMfFHzJGclI6zhDHrEor/
+          !
+          username admin
+           group root-lr
+           group cisco-support
+           secret 10 $6$ro8n./hmAEA12./.$8OK74XLZpn9AFyd/C2f3OCqPebEeyBDIomLGy4uH410l0atKqQD0ykGRiDW6Ksoi23Sss5jC0BdH7hWVxQ6DZ0
+          !
+          username lab
+           group root-lr
+           group cisco-support
+           secret 10 $6$1uWr30isRVSL630.$G7v1W2tbq4WzKNfjzU.5d39GcadctBRw9we/WCgQwQqzRdv7ZWuRJbX.nKMnAGYXRr4JH19Lpif8quT45/xVy.
+          !
+          grpc
+           port 57400
+           no-tls
+           address-family ipv4
+           service-layer
+           !
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          snmp-server interface subset 1 regular-expression Four*
+           notification linkupdown
+          !
+          snmp-server vrf default
+           host 192.168.4.62 traps cisco udp-port 31062
+          !
+          snmp-server community cisco
+          snmp-server traps snmp linkup
+          snmp-server traps snmp linkdown
+          linux networking
+           vrf default
+            address-family ipv4
+             default-route software-forwarding
+            !
+           !
+          !
+          netconf-yang agent
+           ssh
+          !
+          interface Loopback0
+           ipv4 address 6.6.6.6 255.255.255.255
+           ipv6 address fcbb:bb00:6::1/128
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           ipv4 address 192.168.4.76 255.255.255.0
+          !
+          interface GigabitEthernet0/0/0/0
+           ipv6 enable
+          !
+          interface GigabitEthernet0/0/0/1
+           ipv6 enable
+          !
+          router static
+           address-family ipv4 unicast
+            0.0.0.0/0 MgmtEth0/RP0/CPU0/0 192.168.4.1
+           !
+          !
+          router isis core
+           set-overload-bit
+           is-type level-2-only
+           net 49.0001.0000.0000.0006.00
+           distribute link-state
+           address-family ipv4 unicast
+            router-id 6.6.6.6
+           !
+           address-family ipv6 unicast
+            metric-style wide
+            router-id Loopback0
+           !
+           interface Loopback0
+            passive
+            address-family ipv6 unicast
+            !
+           !
+           interface GigabitEthernet0/0/0/0
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+           interface GigabitEthernet0/0/0/1
+            point-to-point
+            address-family ipv6 unicast
+            !
+           !
+          !
+          router bgp 65000
+           bgp router-id 6.6.6.6
+           address-family link-state link-state
+           !
+           neighbor-group Routers
+            remote-as 65000
+            update-source Loopback0
+            address-family link-state link-state
+            !
+           !
+           neighbor fcbb:bb00:1::1
+            use neighbor-group Routers
+           !
+           neighbor fcbb:bb00:2::1
+            use neighbor-group Routers
+           !
+           neighbor fcbb:bb00:3::1
+            use neighbor-group Routers
+           !
+           neighbor fcbb:bb00:4::1
+            use neighbor-group Routers
+           !
+           neighbor fcbb:bb00:5::1
+            use neighbor-group Routers
+           !
+          !
+          pce
+           address ipv4 6.6.6.6
+           address ipv6 fcbb:bb00:6::1
+           api
+            user cisco
+             password encrypted 14141B180F0B
+            !
+           !
+           distribute link-state
+           !
+           timers
+            reoptimization 600
+            keepalive 60
+            minimum-peer-keepalive 30
+           !
+           tcp-buffer size 1024000
+           segment-routing
+            traffic-eng
+             affinity bit-map
+              RED 3
+             !
+            !
+           !
+          !
+          xml agent tty
+          !
+          netconf agent tty
+          !
+          ssh server logging
+          ssh server rate-limit 600
+          ssh server session-limit 100
+          ssh server vrf default
+          ssh server netconf vrf default
+          lslib-server
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n7
+    image_definition: null
+    label: SR-PCE
+    node_definition: iosxrv9000
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -320
+    y: -320
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: donotuse1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: donotuse2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i5
+        label: GigabitEthernet0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 4
+  - boot_disk_size: null
+    configuration: []
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: true
+    id: n8
+    image_definition: null
+    label: Switch
+    node_definition: unmanaged_switch
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -400
+    y: 200
+    interfaces:
+      - id: i0
+        label: port0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i1
+        label: port1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i2
+        label: port2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i3
+        label: port3
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i4
+        label: port4
+        mac_address: null
+        type: physical
+        slot: 4
+      - id: i5
+        label: port5
+        mac_address: null
+        type: physical
+        slot: 5
+      - id: i6
+        label: port6
+        mac_address: null
+        type: physical
+        slot: 6
+      - id: i7
+        label: port7
+        mac_address: null
+        type: physical
+        slot: 7
+  - boot_disk_size: null
+    configuration:
+      - name: default
+        content: System Bridge
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: true
+    id: n9
+    image_definition: null
+    label: ext-conn-0
+    node_definition: external_connector
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -240
+    y: 200
+    interfaces:
+      - id: i0
+        label: port
+        mac_address: null
+        type: physical
+        slot: 0
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:44:53.749 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 26.1.1
+          !! Last configuration change at Thu Oct 29 06:44:53 2026 by cisco
+          !
+          hostname CE3
+          logging console disable
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$MZrc./tB8EX02./.$xyBPTzYhCfWZPYL7dsgHXxBm0IhW2lKw.J7QA6EadvENDZxlCx4OiOseNPUH.sS1PMPaPgyxSDgRZWMgcBpba/
+          !
+          username admin
+           group root-lr
+           group cisco-support
+           secret 10 $6$.Dzfq/nzeRjO5q/.$b8B0Lr/hxE6LSO9FIncz7u6GfzYlZtWdFhUF/1fH4rpsJzQ/3pvBlJo.rsGumJiB4OXpK3t17qa96ZNTINZ3M0
+          !
+          username lab
+           group root-lr
+           group cisco-support
+           secret 10 $6$pnKUg36/0.......$2JjjbfNFsgETy2NXSnNSqJvAKiysrWP7d5pNAZy9HYCk3yY5dh1VYLTlwN8R2TxFT.E5P1GazidT5vodV.h2d.
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           shutdown
+          !
+          interface GigabitEthernet0/0/0/0
+           description to_PE2
+          !
+          interface GigabitEthernet0/0/0/0.100
+           description l3vpn_CustA
+           ipv4 address 192.168.2.2 255.255.255.0
+           encapsulation dot1q 100
+          !
+          interface GigabitEthernet0/0/0/0.101
+           description l3vpn_CustB
+           ipv4 address 10.10.2.2 255.255.255.0
+           encapsulation dot1q 101
+          !
+          interface GigabitEthernet0/0/0/0.102
+           description l3vpn_CustC
+           ipv4 address 172.16.2.2 255.255.255.0
+           encapsulation dot1q 102
+          !
+          interface GigabitEthernet0/0/0/0.200
+           description vpws_to_CE1
+           ipv4 address 10.1.1.2 255.255.255.0
+           encapsulation dot1q 200
+          !
+          interface GigabitEthernet0/0/0/1
+           shutdown
+          !
+          interface GigabitEthernet0/0/0/2
+           shutdown
+          !
+          router static
+           address-family ipv4 unicast
+            10.10.1.0/24 GigabitEthernet0/0/0/0.101 10.10.2.1
+            10.10.3.0/24 GigabitEthernet0/0/0/0.101 10.10.2.1
+            172.16.1.0/24 GigabitEthernet0/0/0/0.102 172.16.2.1
+            172.16.3.0/24 GigabitEthernet0/0/0/0.102 172.16.2.1
+            192.168.1.0/24 GigabitEthernet0/0/0/0.100 192.168.2.1
+            192.168.3.0/24 GigabitEthernet0/0/0/0.100 192.168.2.1
+           !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n10
+    image_definition: null
+    label: CE3
+    node_definition: xrd
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: 80
+    y: -200
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: first-boot.cfg
+        content: |2-
+
+          Thu Oct 29 06:45:48.991 UTC
+          !! Building configuration...
+          !! IOS XR Configuration 26.1.1
+          !! Last configuration change at Thu Oct 29 06:45:48 2026 by cisco
+          !
+          hostname CE4
+          logging console disable
+          username cisco
+           group root-lr
+           group cisco-support
+           secret 10 $6$A89mM0mWAa6X7M0.$VxOvfIapuZKJgZ0529sYUDhVhsFJxBI5o9FIBWmMsphmd9OJ.C30I8u2HFJR2SKYkcKWJCK5wfTjmVvx0UXT60
+          !
+          username admin
+           group root-lr
+           group cisco-support
+           secret 10 $6$eKv/apSU75M0a...$HV7u6c2DNXyO8YhkHZbGlAnttiCc4KwzJm9Q3vU9kszdvg8nPvqg56YwJabsKOev9ilNveFNIJaMaZ4YFDgW8.
+          !
+          username lab
+           group root-lr
+           group cisco-support
+           secret 10 $6$/aM.H074kY/A7H0.$UuFPiLVASsEsMNoabGPcxF1kzF/2NcX0KkA8T2THRFDWgy3Keblq9dx9OvilWbPg1GMxfTl2cyGZwtjbGjhoW/
+          !
+          line console
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          line default
+           exec-timeout 0 0
+           absolute-timeout 0
+           session-timeout 0
+          !
+          interface MgmtEth0/RP0/CPU0/0
+           shutdown
+          !
+          interface GigabitEthernet0/0/0/0
+           description to_PE3
+          !
+          interface GigabitEthernet0/0/0/0.100
+           description l3vpn_CustA
+           ipv4 address 192.168.3.2 255.255.255.0
+           encapsulation dot1q 100
+          !
+          interface GigabitEthernet0/0/0/0.101
+           description l3vpn_CustB
+           ipv4 address 10.10.3.2 255.255.255.0
+           encapsulation dot1q 101
+          !
+          interface GigabitEthernet0/0/0/0.102
+           description l3vpn_CustC
+           ipv4 address 172.16.3.2 255.255.255.0
+           encapsulation dot1q 102
+          !
+          interface GigabitEthernet0/0/0/0.200
+           description vpws_to_CE1
+           ipv4 address 10.1.2.2 255.255.255.0
+           encapsulation dot1q 200
+          !
+          interface GigabitEthernet0/0/0/1
+           shutdown
+          !
+          interface GigabitEthernet0/0/0/2
+           shutdown
+          !
+          router static
+           address-family ipv4 unicast
+            10.10.1.0/24 GigabitEthernet0/0/0/0.101 10.10.3.1
+            10.10.2.0/24 GigabitEthernet0/0/0/0.101 10.10.3.1
+            172.16.1.0/24 GigabitEthernet0/0/0/0.102 172.16.3.1
+            172.16.2.0/24 GigabitEthernet0/0/0/0.102 172.16.3.1
+            192.168.1.0/24 GigabitEthernet0/0/0/0.100 192.168.3.1
+            192.168.2.0/24 GigabitEthernet0/0/0/0.100 192.168.3.1
+           !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n11
+    image_definition: null
+    label: CE4
+    node_definition: xrd
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: 80
+    y: 40
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: MgmtEth0/RP0/CPU0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/0/0/0
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/0/0/1
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/0/0/2
+        mac_address: null
+        type: physical
+        slot: 3
+links:
+  - id: l0
+    n1: n2
+    n2: n0
+    i1: i2
+    i2: i4
+    conditioning: {}
+    label: xrd-4-GigabitEthernet0/0/0/0<->8711-PE1-FourHundredGigE0/0/0/2
+  - id: l1
+    n1: n1
+    n2: n3
+    i1: i3
+    i2: i3
+    conditioning: {}
+    label: 8711-32fh-m-0-FourHundredGigE0/0/0/1<->8711-32fh-m-1-FourHundredGigE0/0/0/1
+  - id: l2
+    n1: n1
+    n2: n4
+    i1: i4
+    i2: i2
+    conditioning: {}
+    label: 8711-32fh-m-0-FourHundredGigE0/0/0/2<->xrd-1-GigabitEthernet0/0/0/0
+  - id: l3
+    n1: n3
+    n2: n4
+    i1: i4
+    i2: i3
+    conditioning: {}
+    label: 8711-32fh-m-1-FourHundredGigE0/0/0/2<->xrd-1-GigabitEthernet0/0/0/1
+  - id: l4
+    n1: n0
+    n2: n5
+    i1: i2
+    i2: i2
+    conditioning: {}
+    label: 8711-PE1-FourHundredGigE0/0/0/0<->8711-32fh-m-0-FourHundredGigE0/0/0/0
+  - id: l5
+    n1: n5
+    n2: n1
+    i1: i3
+    i2: i2
+    conditioning: {}
+    label: 8711-32fh-m-0-FourHundredGigE0/0/0/1<->8711-PE2-FourHundredGigE0/0/0/0
+  - id: l6
+    n1: n0
+    n2: n6
+    i1: i3
+    i2: i2
+    conditioning: {}
+    label: 8711-PE1-FourHundredGigE0/0/0/1<->8711-32fh-m-1-FourHundredGigE0/0/0/0
+  - id: l7
+    n1: n6
+    n2: n3
+    i1: i3
+    i2: i2
+    conditioning: {}
+    label: 8711-32fh-m-1-FourHundredGigE0/0/0/1<->8711-PE3-FourHundredGigE0/0/0/0
+  - id: l8
+    n1: n5
+    n2: n6
+    i1: i4
+    i2: i4
+    conditioning: {}
+    label: 8711-32fh-m-0-FourHundredGigE0/0/0/2<->8711-32fh-m-1-FourHundredGigE0/0/0/2
+  - id: l9
+    n1: n5
+    n2: n7
+    i1: i5
+    i2: i4
+    conditioning: {}
+    label: P4-FourHundredGigE0/0/0/3<->xr9kv-0-GigabitEthernet0/0/0/0
+  - id: l10
+    n1: n6
+    n2: n7
+    i1: i5
+    i2: i5
+    conditioning: {}
+    label: P5-FourHundredGigE0/0/0/3<->xr9kv-0-GigabitEthernet0/0/0/1
+  - id: l11
+    n1: n8
+    n2: n9
+    i1: i0
+    i2: i0
+    conditioning: {}
+    label: Switch-port0<->ext-conn-0-port
+  - id: l12
+    n1: n0
+    n2: n8
+    i1: i1
+    i2: i1
+    conditioning: {}
+    label: 8711-PE1-MgmtEth0/RP0/CPU0/0<->Switch-port1
+  - id: l13
+    n1: n1
+    n2: n8
+    i1: i1
+    i2: i2
+    conditioning: {}
+    label: 8711-PE2-MgmtEth0/RP0/CPU0/0<->Switch-port2
+  - id: l14
+    n1: n3
+    n2: n8
+    i1: i1
+    i2: i3
+    conditioning: {}
+    label: 8711-PE3-MgmtEth0/RP0/CPU0/0<->Switch-port3
+  - id: l15
+    n1: n5
+    n2: n8
+    i1: i1
+    i2: i4
+    conditioning: {}
+    label: P4-MgmtEth0/RP0/CPU0/0<->Switch-port4
+  - id: l16
+    n1: n6
+    n2: n8
+    i1: i1
+    i2: i5
+    conditioning: {}
+    label: P5-MgmtEth0/RP0/CPU0/0<->Switch-port5
+  - id: l17
+    n1: n7
+    n2: n8
+    i1: i1
+    i2: i6
+    conditioning: {}
+    label: SR-PCE-MgmtEth0/RP0/CPU0/0<->Switch-port6
+  - id: l18
+    n1: n1
+    n2: n10
+    i1: i5
+    i2: i2
+    conditioning: {}
+    label: PE2-FourHundredGigE0/0/0/3<->xrd-0-GigabitEthernet0/0/0/0
+  - id: l19
+    n1: n3
+    n2: n11
+    i1: i5
+    i2: i2
+    conditioning: {}
+    label: PE3-FourHundredGigE0/0/0/3<->xrd-1-GigabitEthernet0/0/0/0
+lab:
+  description: ''
+  notes: ''
+  title: SRv6 - C8711
+  node_staging:
+    enabled: false
+    start_remaining: true
+    abort_on_failure: false
+  version: 0.3.1

@@ -1,0 +1,147 @@
+{
+  "ietf-l2vpn-ntw:l2vpn-ntw": {
+    "vpn-services": {
+      "vpn-service": [
+        {
+          "vpn-id": "CustF_vpls",
+          "vpn-type": "ietf-vpn-common:mpls-evpn",
+          "vpn-service-topology": "ietf-vpn-common:any-to-any",
+          "vpn-nodes": {
+            "vpn-node": [
+              {
+                "vpn-node-id": "PE1",
+                "signaling-option": {
+                  "evpn-policies": {
+                    "mac-learning-mode": "ietf-l2vpn-ntw:control-plane"
+                  }
+                },
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "FourHundredGigE0/0/0/2",
+                      "connection": {
+                        "encapsulation": {
+                          "encap-type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 500,
+                            "tag-operations": {
+                              "pop": "1",
+                              "cisco-l2vpn-ntw:mode": "symmetric"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "cisco-l2vpn-ntw:te-service-mapping": {
+                  "srv6": {
+                    "locator": "MAIN"
+                  },
+                  "te-mapping": {
+                    "odn": {
+                      "route-policy": [
+                        "POLICY3"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "vpn-node-id": "PE2",
+                "signaling-option": {
+                  "evpn-policies": {
+                    "mac-learning-mode": "ietf-l2vpn-ntw:control-plane"
+                  }
+                },
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "Bundle-Ether1",
+                      "connection": {
+                        "encapsulation": {
+                          "encap-type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 500,
+                            "tag-operations": {
+                              "pop": "1",
+                              "cisco-l2vpn-ntw:mode": "symmetric"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "cisco-l2vpn-ntw:multi-home": {
+                  "ethernet-segment-identifier": "23.23.00.00.00.00.00.00.00"
+                },
+                "cisco-l2vpn-ntw:te-service-mapping": {
+                  "srv6": {
+                    "locator": "MAIN"
+                  },
+                  "te-mapping": {
+                    "odn": {
+                      "route-policy": [
+                        "POLICY3"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "vpn-node-id": "PE3",
+                "signaling-option": {
+                  "evpn-policies": {
+                    "mac-learning-mode": "ietf-l2vpn-ntw:control-plane"
+                  }
+                },
+                "vpn-network-accesses": {
+                  "vpn-network-access": [
+                    {
+                      "id": "0",
+                      "interface-id": "Bundle-Ether1",
+                      "connection": {
+                        "encapsulation": {
+                          "encap-type": "ietf-vpn-common:dot1q",
+                          "dot1q": {
+                            "cvlan-id": 500,
+                            "tag-operations": {
+                              "pop": "1",
+                              "cisco-l2vpn-ntw:mode": "symmetric"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "cisco-l2vpn-ntw:multi-home": {
+                  "ethernet-segment-identifier": "23.23.00.00.00.00.00.00.00"
+                },
+                "cisco-l2vpn-ntw:te-service-mapping": {
+                  "srv6": {
+                    "locator": "MAIN"
+                  },
+                  "te-mapping": {
+                    "odn": {
+                      "route-policy": [
+                        "POLICY3"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "cisco-l2vpn-ntw:auto-evi-id": [
+            null
+          ],
+          "cisco-l2vpn-ntw:bridge-group": "BRIDGE"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+site_name: Crosswork Network Controller Demo Guide
+site_description: Cisco Crosswork Network Controller (CNC) demo guide with SRv6
+# Change this to match the GitHub Pages URL
+# site_url: https://<github-user>.github.io/<repository>/
+
+nav:
+  - Introduction: index.md
+  - 01. Demo Topology: 01-demo-topology/index.md
+  - 02. Dashboard and Crosswork Manager: 02-dashboard/index.md
+  - 03. Topology and Service Visualization: 03-visualization/index.md
+  - 04. Performance Monitoring and Alarms: 04-performance-alarms/index.md
+  - 05. SR Policy Provisioning: 05-sr-policy/index.md
+  - 06. L3VPN Provisioning: 06-l3vpn/index.md
+  - 07. L2VPN VPWS Provisioning: 07-l2vpn-vpws/index.md
+  - 08. L2VPN VPLS Provisioning: 08-l2vpn-vpls/index.md
+  - 09. Configuration Templates: 09-config-template/index.md
+  - 10. Configuration Backup and Restore: 10-backup-restore/index.md
+  - Appendix - Demo Payloads: payloads.md
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.footer
+    - navigation.top
+    - toc.follow
+    - search.highlight
+    - content.code.copy
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - glightbox
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
